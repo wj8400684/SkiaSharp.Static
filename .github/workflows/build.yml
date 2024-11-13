@@ -24,12 +24,16 @@ jobs:
       - name: Create build dir
         working-directory: ${{github.workspace}}
         shell: bash
-        run: mkdir -p out\windows\x64\
+        run: |
+          ls
+          mkdir -p out\windows\x64\
+          ls
 
       - name: Prepare build skia
         working-directory: ${{github.workspace}}
         shell: pwsh
         run: |
+          dir
           cp args.gn out\windows\x64\
           cd skiasharp\externals\skia
           python tools\git-sync-deps
