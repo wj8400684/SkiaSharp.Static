@@ -8,9 +8,11 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
       - uses: actions/cache@v3
         with:
-          # build should be beside of git repo because it's submodule must be a empty dir when init.
           path: out/windows/x64/obj
           key: ${{ runner.os }}-skia-build-cache
+      - name: Install 7zip
+        run: choco install 7zip -y
+        shell: pwsh
       - name: Clone source
         working-directory: ${{github.workspace}}
         shell: bash
@@ -62,13 +64,12 @@ jobs:
           cd skiasharp\native\windows\libHarfBuzzSharp\bin\x64\Release
           7z a -y -mx9 libHarfBuzzSharp.7z ./libHarfBuzzSharp.lib
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v2
         with:
           name: libSkiaSharp
           path: out/windows/x64/libSkiaSharp.7z
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v2
         with:
           name: libHarfBuzzSharp
           path: skiasharp/native/windows/libHarfBuzzSharp/bin/x64/Release/libHarfBuzzSharp.7z
-
